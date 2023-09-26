@@ -34,8 +34,12 @@ install_dependencies() {
     apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg > /dev/null 2>&1
     LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php > /dev/null 2>&1
     if [ "$(lsb_release -si)" != "Ubuntu" ] || [ "$(lsb_release -sr)" != "22.04" ]; then
-    curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash > /dev/null 2>&1
+    if ! dpkg -l | grep -q mariadb-server; then
+        curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash > /dev/null 2>&1
     fi
+fi
+
+
     apt update > /dev/null 2>&1
     if [ "$(lsb_release -si)" != "Ubuntu" ] || [ "$(lsb_release -sr)" = "18.04" ]; then
     apt-add-repository universe > /dev/null 2>&1
