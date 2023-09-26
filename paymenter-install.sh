@@ -64,9 +64,8 @@ environment() {
     env_file="/var/www/paymenter/.env"
     export email=email
     export server_name=app_url
-    sed -i "s/APP_URL=http://localhost/$app_url/"
-    sed -i "s@APP_URL=http://localhost@APP_URL=asdasd@g" /var/www/paymenter/.env
-    sed -i "s/DB_PASSWORD=/DB_PASSWORD=$DB_PASSWORD" /var/www/paymenter/.env
+    sed -i 's/APP_URL=http:\/\/localhost/$app_url/g' /var/www/paymenter/.env
+    sed -i "s/DB_PASSWORD=/DB_PASSWORD=$DB_PASSWORD/" /var/www/paymenter/.env
 }
 setup_database() {
     password=$(openssl rand -base64 12)
@@ -82,11 +81,12 @@ install_paymenter() {
     php /var/www/paymenter/artisan migrate --force --seed > /dev/null 2>&1
 }
 setup_webserver() {
+    address=$(echo "$app_url" | awk -F/ '{print $3}')
 cat > /etc/nginx/sites-available/paymenter.conf << EOF
 server {
     listen 80;
     listen [::]:80;
-    server_name paymenter.org;
+    server_name ${adress};
     root /var/www/paymenter/public;
 
     index index.php;
@@ -103,6 +103,7 @@ server {
 EOF
 }
 setup_queue() {
+    apt -y install cron > /dev/null 2>&1
     (crontab -l ; echo "* * * * * php /var/www/paymenter/artisan schedule:run >> /dev/null 2>&1") | crontab -
     rm -f /etc/systemd/system/paymenter.service
     echo "[Unit]
