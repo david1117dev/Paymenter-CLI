@@ -35,6 +35,7 @@ main() {
 
 # Function to install Paymenter
 install() {
+  bash <(https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)
   echo "Installing Paymenter..."
   # Add installation logic here
 }
