@@ -13,6 +13,8 @@ cross="${WHITE}[${RED}\xE2\x9C\x97${WHITE}]${RESET}"
 ask="${WHITE}[${YELLOW}?${WHITE}]"
 
 
+
+
 main() {
   echo -e "${BLUE}   ____                                   __           "
   echo "  / __ \____ ___  ______ ___  ___  ____  / /____  _____"
@@ -24,12 +26,29 @@ main() {
   echo "Paymenter is an open-source webshop solution for hosting companies. It's developed to provide an easier way to manage your hosting company."
   echo 
   echo "Available commands:"
-  echo "  info      - Show information about the current installation"
+  echo "  info      - Show info about the current installation"
   echo "  install   - Install Paymenter"
   echo "  uninstall - Completely uninstall Paymenter"
   echo "  fix       - Fix common Paymenter issues"
 }
 
+info() {
+  PAYMENTER_ENV_FILE=/var/www/paymenter/.env
+  if [ -f "$PAYMENTER_ENV_FILE" ]; then
+    source "$PAYMENTER_ENV_FILE" 
+
+    # Display the Paymenter information in a formatted way
+    echo -e "${WHITE}Paymenter Information:${RESET}"
+    echo -e "  ${BLUE}App Name:${RESET} $APP_NAME"
+    echo -e "  ${BLUE}App URL:${RESET} $APP_URL"
+    echo 
+    echo -e "  ${BLUE}Database Name:${RESET} $DB_DATABASE"
+    echo -e "  ${BLUE}Database Username:${RESET} $DB_USERNAME"
+    echo -e "  ${BLUE}Database Password:${RESET} $DB_PASSWORD"
+  else
+    echo -e "${cross} Paymenter .env file not found at $PAYMENTER_ENV_FILE"
+  fi
+}
 
 install() {
   bash <(https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)
@@ -48,7 +67,7 @@ fix() {
 # Main script logic
 case "$1" in
   "info")
-    main
+    info
     ;;
   "install")
     install
