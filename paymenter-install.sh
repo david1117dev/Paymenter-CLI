@@ -190,5 +190,5 @@ if [[ "$confirm" =~ ^[Yy]$ ]]; then
   setup_webserver
   setup_queue
 else
-  echo "${cross} Installation of paymenter canceled."
+  echo -e "${cross} Installation of paymenter canceled."
 fi
