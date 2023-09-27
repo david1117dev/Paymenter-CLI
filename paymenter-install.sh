@@ -62,19 +62,51 @@ download_paymenter() {
  
 }
 environment() {
-    echo -e "${checkmark} Setup environment" 
-    while true; do echo -e -n "${ask} Enter Paymenter Domain or IP (Include https://): " && read app_url && [[ $app_url =~ ^(http:\/\/localhost|http:\/\/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+|https?:\/\/(localhost|[0-9]{3}\.[0-9]{3}\.[0-9]{3}|[a-zA-Z0-9.-]+[.][a-zA-Z]+))$ ]] && { echo ""; break; } || echo "Invalid app_url format. It should be a valid HTTP or HTTPS URL."; done
-    while true; do echo -e -n "${ask} Enter admin user email: " && read email && [[ "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$ ]] && break; echo "Invalid email address format. Please enter a valid email address."; done
-    echo -e "${ask} Enter admin user password: (hidden input)" && read -s password
-    echo -e -n "${ask} Enter admin username: " && read username
+    echo -e "${checkmark} Setup environment"
+    echo
+    while true; do
+        echo -e -n "${ask} Enter Paymenter Domain or IP (Include https://): "
+        read app_url
+        if [[ $app_url =~ ^(http:\/\/localhost|http:\/\/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+|https?:\/\/(localhost|[0-9]{3}\.[0-9]{3}\.[0-9]{3}|[a-zA-Z0-9.-]+[.][a-zA-Z]+))$ ]]; then
+            echo ""
+            break
+        else
+            echo "Invalid app_url format. It should be a valid HTTP or HTTPS URL."
+        fi
+    done
+
+    while true; do
+        echo -e -n "${ask} Enter admin user email: "
+        read email
+        if [[ "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$ ]]; then
+            break
+        else
+            echo "Invalid email address format. Please enter a valid email address."
+        fi
+    done
+
+    echo -e -n "${ask} Enter admin user password: (hidden input)"
+    read -s password
+    echo
+
+    while true; do
+        echo -e -n "${ask} Enter admin username: "
+        read username
+        if [[ ! -z "$username" ]]; then
+            break
+        else
+            echo "Username cannot be empty. Please enter a valid username."
+        fi
+    done
+
     echo -e "$email\n$password\n$username\nadmin" | php /var/www/paymenter/artisan p:user:create
     env_file="/var/www/paymenter/.env"
     export email=email
     export server_name=app_url
     sed -i "s|APP_URL=http://localhost|APP_URL=$app_url|g" /var/www/paymenter/.env
     sed -i "s|DB_PASSWORD=|DB_PASSWORD=$DB_PASSWORD|" /var/www/paymenter/.env
-
 }
+
 setup_database() {
     password=$(openssl rand -base64 12)
     export DB_PASSWORD="$password"
