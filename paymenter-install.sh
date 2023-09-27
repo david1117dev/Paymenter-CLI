@@ -68,7 +68,7 @@ environment() {
     env_file="/var/www/paymenter/.env"
     export email=email
     export server_name=app_url
-    sed -i "s|APP_URL=http://localhost|$app_url|g" /var/www/paymenter/.env
+    sed -i "s|APP_URL=http://localhost|APP_URL=$app_url|g" /var/www/paymenter/.env
     sed -i "s|DB_PASSWORD=|DB_PASSWORD=$DB_PASSWORD|" /var/www/paymenter/.env
 
 }
