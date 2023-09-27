@@ -26,7 +26,7 @@ uninstall(){
     
     echo -e "${checkmark} Paymenter has been successfully uninstalled."
   else
-    echo "${cross} Uninstallation canceled."
+    echo -e "${cross} Uninstallation canceled."
   fi
 }
 if [[ $EUID -ne 0 ]]; then
