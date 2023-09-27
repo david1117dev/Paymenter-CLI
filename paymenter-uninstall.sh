@@ -10,9 +10,9 @@ RESET='\e[0m'
 
 checkmark="${WHITE}[${GREEN}\xE2\x9C\x93${WHITE}] ${RESET}"
 cross="${WHITE}[${RED}\xE2\x9C\x97${WHITE}]${RESET}"
-ask="${WHITE}[${YELLOW}?${WHITE}]"echo -e "${ask} Are you sure you want to uninstall Paymenter? (y/N): "
-
+ask="${WHITE}[${YELLOW}?${WHITE}]"
 uninstall(){
+  echo -e "${ask} Are you sure you want to uninstall Paymenter? (y/N): "
   read -r confirm
   if [[ "$confirm" =~ ^[Yy]$ ]]; then
     echo "Uninstalling Paymenter..."
