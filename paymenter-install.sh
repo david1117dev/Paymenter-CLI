@@ -29,7 +29,7 @@ check_distribution() {
 }
  
 install_dependencies() {
-    echo -e "${checkmark} Installing dependencies
+    echo -e "${checkmark} Installing dependencies"
     apt update > /dev/null 2>&1 && apt upgrade > /dev/null 2>&1
     apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg > /dev/null 2>&1
     LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php > /dev/null 2>&1
