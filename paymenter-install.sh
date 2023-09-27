@@ -174,7 +174,7 @@ echo -e "${WHITE}Welcome to the ${BLUE}Paymenter ${WHITE}installation script${RE
 if [ -d "/var/www/paymenter" ]; then
     echo -e "${ask} Paymenter is already installed in /var/www/paymenter. Do you want to reinstall it? (y/N): " && read reinstall
     if [[ ! "$reinstall" =~ ^[Yy]$ ]]; then
-      echo "Reinstallation of Paymenter canceled."
+      echo -e "${cross} Reinstallation of Paymenter canceled."
       exit 0
     fi
 fi
