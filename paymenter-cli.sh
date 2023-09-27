@@ -51,16 +51,30 @@ info() {
 }
 
 install() {
+  if [ "$EUID" -ne 0 ]; then
+    echo -e "${cross} This command must be run as root."
+    exit 1
+  fi
   bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)"
 }
 
 uninstall() {
+  if [ "$EUID" -ne 0 ]; then
+    echo -e "${cross} This command must be run as root."
+    exit 1
+  fi
   bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-uninstall.sh)"
 
 }
 
 fix() {
 #TODO - FIX COMMON ISSUES
+  if [ "$EUID" -ne 0 ]; then
+    echo -e "${cross} This command must be run as root."
+    exit 1
+  fi
+  bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-fix.sh)"
+ 
 }
 
 # Main script logic
