@@ -29,4 +29,8 @@ uninstall(){
     echo "Uninstallation canceled."
   fi
 }
+if [[ $EUID -ne 0 ]]; then
+   echo -e "${cross} This script must be run as root."
+   exit 1
+fi
 uninstall
