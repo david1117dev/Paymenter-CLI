@@ -107,7 +107,7 @@ server {
     }
 }
 EOF
-    else [[ $app_url == https://* ]]; then
+    elif [[ $app_url == https://* ]]; then
         domain=$(echo $app_url | sed 's/^https:\/\///')
         rm -f /etc/nginx/sites-available/paymenter.conf
         cat > /etc/nginx/sites-available/paymenter.conf <<EOF
@@ -134,12 +134,11 @@ server {
 EOF
         systemctl stop nginx
         certbot certonly --standalone -d $domain --non-interactive --agree-tos --register-unsafely-without-email
-      
-        
     fi
     ln -s /etc/nginx/sites-available/paymenter.conf /etc/nginx/sites-enabled/paymenter.conf
     systemctl restart nginx
 }
+
 
 setup_queue() {
     apt -y install cron > /dev/null 2>&1
