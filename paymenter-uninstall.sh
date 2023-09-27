@@ -16,7 +16,7 @@ uninstall(){
   read -r confirm
   if [[ "$confirm" =~ ^[Yy]$ ]]; then
     echo "${checkmark} Uninstalling Paymenter..."
-    mariadb --execute="DROP USER IF EXISTS 'paymenter'@'127.0.0.1'; DROP DATABASE IF EXISTS 'paymenter';"
+    mariadb --execute="DROP USER IF EXISTS 'paymenter'@'127.0.0.1'; DROP DATABASE IF EXISTS paymenter;"
     rm -rf /var/www/paymenter/
     rm -f /etc/nginx/sites-available/paymenter.conf
     rm -f /etc/nginx/sites-enabled/paymenter.conf
