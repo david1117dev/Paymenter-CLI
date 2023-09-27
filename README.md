@@ -11,4 +11,7 @@ Paymenter CLI is a script that simplifies the management of Paymenter, an open-s
 
 ## Getting Started
 
+Paste this in your terminal.
 ```curl -L -o /usr/local/bin/paymenter "https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-cli.sh" && chmod +x /usr/local/bin/paymenter```
+
+Now, the paymenter command should be installed
