@@ -67,7 +67,7 @@ environment() {
     while true; do echo -e -n "${ask} Enter admin user email: " && read email && [[ "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$ ]] && break; echo "Invalid email address format. Please enter a valid email address."; done
     echo -e "${ask} Enter admin user password: (hidden input)" && read -s password
     echo -e -n "${ask} Enter admin username: " && read username
-    echo -e "$email\n$password\n$username\nadmin" | php /var/www/paymenter/artisan p:user:create
+    echo -e "$email\n$password\n$username\nadmin" | php /var/www/paymenter/artisan p:user:create  > /dev/null 2>&1
     env_file="/var/www/paymenter/.env"
     export email=email
     export server_name=app_url
