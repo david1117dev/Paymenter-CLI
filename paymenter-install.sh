@@ -171,7 +171,7 @@ WantedBy=multi-user.target
  
 }
 echo -e "${WHITE}Welcome to the ${BLUE}Paymenter ${WHITE}installation script${RESET}" 
-echo -e "${ask} Are you sure you want to proceed with the installation of paymenter? (y/N): " && read confirm
+echo -e "${ask} Are you sure you want to proceed with the installation (y/N): " && read confirm
 
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
   check_distribution
