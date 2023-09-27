@@ -167,7 +167,7 @@ RestartSec=5s
 [Install]
 WantedBy=multi-user.target
     " | tee /etc/systemd/system/paymenter.service > /dev/null
-    systemctl enable --now paymenter.service
+    systemctl enable --now paymenter.service > /dev/null 2>&1
  
 }
 echo -e "${WHITE}Welcome to the ${BLUE}Paymenter ${WHITE}installation script${RESET}" 
