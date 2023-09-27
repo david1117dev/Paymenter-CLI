@@ -6,6 +6,7 @@ WHITE='\033[1;37m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 RESET='\e[0m'
+BLUE='\033[34m'
 
 checkmark="${WHITE}[${GREEN}\xE2\x9C\x93${WHITE}] ${RESET}"
 cross="${WHITE}[${RED}\xE2\x9C\x97${WHITE}]${RESET}"
@@ -39,7 +40,7 @@ install_dependencies() {
     if ! dpkg -l | grep -q mariadb-server; then
         curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash > /dev/null 2>&1
     fi
-fi
+    fi
 
 
     apt update > /dev/null 2>&1
@@ -168,13 +169,18 @@ WantedBy=multi-user.target
     systemctl enable --now paymenter.service
  
 }
- 
- 
-check_distribution
-install_dependencies
-download_paymenter
-setup_database
-install_paymenter
-environment
-setup_webserver
-setup_queue
+echo -e "${WHITE}Welcome to the ${BLUE}Paymenter ${WHITE}installation script${RESET}" 
+read -r -p "${ask} Are you sure you want to proceed with the installation of paymenter? (y/N): " ask
+
+if [[ "$ask" =~ ^[Yy]$ ]]; then
+  check_distribution
+  install_dependencies
+  download_paymenter
+  setup_database
+  install_paymenter
+  environment
+  setup_webserver
+  setup_queue
+else
+  echo "Installation of paymenter canceled."
+fi
