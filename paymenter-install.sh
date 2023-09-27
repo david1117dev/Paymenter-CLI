@@ -172,5 +172,5 @@ download_paymenter
 setup_database
 install_paymenter
 environment
-#setup_webserver
-#setup_queue
+setup_webserver
+setup_queue
