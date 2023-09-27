@@ -8,8 +8,8 @@ NC='\033[0m'
 RESET='\e[0m'
 BLUE='\033[34m'
 
-checkmark="${WHITE}[${GREEN}\xE2\x9C\x93${WHITE}] ${RESET}"
-cross="${WHITE}[${RED}\xE2\x9C\x97${WHITE}]${RESET}"
+checkmark="${WHITE}[${GREEN}\xE2\x9C\x93${WHITE}]"
+cross="${WHITE}[${RED}\xE2\x9C\x97${WHITE}]"
 ask="${WHITE}[${YELLOW}?${WHITE}]"
  
 if [[ $EUID -ne 0 ]]; then
@@ -149,7 +149,7 @@ EOF
 
 setup_queue() {
     apt -y install cron > /dev/null 2>&1
-    (crontab -l ; echo "* * * * * php /var/www/paymenter/artisan schedule:run >> /dev/null 2>&1") | crontab -
+    (crontab -l 2>/dev/null ; echo "* * * * * php /var/www/paymenter/artisan schedule:run >> /dev/null 2>&1") | crontab - > /dev/null 2>&1
     rm -f /etc/systemd/system/paymenter.service
     echo "[Unit]
 Description=Paymenter Queue Worker
@@ -183,5 +183,5 @@ if [[ "$confirm" =~ ^[Yy]$ ]]; then
   setup_webserver
   setup_queue
 else
-  echo "Installation of paymenter canceled."
+  echo "${cross}Installation of paymenter canceled."
 fi
