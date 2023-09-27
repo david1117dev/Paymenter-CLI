@@ -177,7 +177,7 @@ if [ -d "/var/www/paymenter" ]; then
       echo "Reinstallation of Paymenter canceled."
       exit 0
     fi
-  fi
+fi
 echo -e "${ask} Are you sure you want to proceed with the installation (y/N): " && read confirm
 
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
