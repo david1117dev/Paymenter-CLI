@@ -16,17 +16,19 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 check_distribution() {
-    if [[ -f /etc/os-release && $(grep -c "Ubuntu 18\|Ubuntu 20\|Ubuntu 22" /etc/os-release) -gt 0 ]]; then
-        echo "" > /dev/null 2>&1
-    elif [[ -f /etc/os-release && $(grep -c "CentOS Linux 7\|CentOS Linux 8" /etc/os-release) -gt 0 ]]; then
-        echo "" > /dev/null 2>&1
-    elif [[ -f /etc/os-release && $(grep -c "Debian GNU/Linux 10\|Debian GNU/Linux 11" /etc/os-release) -gt 0 ]]; then
-        echo "" > /dev/null 2>&1
-    else
-        echo -e "${cross} This is an unsupported Linux distribution/version."
-        exit 1
+    supported_distributions=("Ubuntu 18" "Ubuntu 20" "Ubuntu 22" "CentOS Linux 7" "CentOS Linux 8" "Debian GNU/Linux 10" "Debian GNU/Linux 11")
+    if [[ -f /etc/os-release ]]; then
+        source /etc/os-release
+        for dist in "${supported_distributions[@]}"; do
+            if [[ "$PRETTY_NAME" == *"$dist"* ]]; then
+                return
+            fi
+        done
     fi
+    echo -e "${cross} This is an unsupported Linux distribution/version."
+    exit 1
 }
+
  
 install_dependencies() {
     echo -e "${checkmark} Installing dependencies"
