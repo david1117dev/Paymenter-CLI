@@ -29,7 +29,7 @@ main() {
   echo "  info      - Show info about the current installation"
   echo "  install   - Install Paymenter"
   echo "  uninstall - Completely uninstall Paymenter"
-  echo "  fix       - Fix common Paymenter issues"
+  #echo "  fix       - Fix common Paymenter issues"
 }
 
 info() {
@@ -51,17 +51,16 @@ info() {
 }
 
 install() {
-  bash <(https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)
+  bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)"
 }
 
 uninstall() {
-  bash <(https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-uninstall.sh)
+  bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-uninstall.sh)"
+
 }
 
-# Function to fix Paymenter issues
 fix() {
-  echo "Fixing Paymenter issues..."
-  # Add fix logic here
+#TODO - FIX COMMON ISSUES
 }
 
 # Main script logic
