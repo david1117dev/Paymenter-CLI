@@ -85,18 +85,20 @@ install_paymenter() {
     php /var/www/paymenter/artisan migrate --force --seed > /dev/null 2>&1
 }
 setup_webserver() {
-    address=$(echo "$app_url" | awk -F/ '{print $3}')
-cat > /etc/nginx/sites-available/paymenter.conf << EOF
+    if [[ $app_url == http://* ]]; then
+        domain=$(echo $app_url | sed 's/^http:\/\///')
+        rm -f /etc/nginx/sites-available/paymenter.conf
+        cat > /etc/nginx/sites-available/paymenter.conf <<EOF
 server {
     listen 80;
     listen [::]:80;
-    server_name ${adress};
+    server_name $domain;
     root /var/www/paymenter/public;
 
     index index.php;
 
     location / {
-        try_files $uri $uri/ /index.php?$query_string;
+        try_files \$uri \$uri/ /index.php?\$query_string;
     }
 
     location ~ \.php$ {
@@ -105,7 +107,40 @@ server {
     }
 }
 EOF
+    else [[ $app_url == https://* ]]; then
+        domain=$(echo $app_url | sed 's/^https:\/\///')
+        rm -f /etc/nginx/sites-available/paymenter.conf
+        cat > /etc/nginx/sites-available/paymenter.conf <<EOF
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name $domain;
+    root /var/www/paymenter/public;
+
+    index index.php;
+
+    ssl_certificate /etc/letsencrypt/live/$domain/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/$domain/privkey.pem;
+
+    location / {
+        try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+    }
 }
+EOF
+        systemctl stop nginx
+        certbot certonly --standalone -d $domain --non-interactive --agree-tos --register-unsafely-without-email
+      
+        
+    fi
+    ln -s /etc/nginx/sites-available/paymenter.conf /etc/nginx/sites-enabled/paymenter.conf
+    systemctl restart nginx
+}
+
 setup_queue() {
     apt -y install cron > /dev/null 2>&1
     (crontab -l ; echo "* * * * * php /var/www/paymenter/artisan schedule:run >> /dev/null 2>&1") | crontab -
