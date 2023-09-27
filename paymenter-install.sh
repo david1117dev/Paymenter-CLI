@@ -170,7 +170,14 @@ WantedBy=multi-user.target
     systemctl enable --now paymenter.service > /dev/null 2>&1
  
 }
-echo -e "${WHITE}Welcome to the ${BLUE}Paymenter ${WHITE}installation script${RESET}" 
+echo -e "${WHITE}Welcome to the ${BLUE}Paymenter ${WHITE}installation script${RESET}"
+if [ -d "/var/www/paymenter" ]; then
+    echo -e "${ask} Paymenter is already installed in /var/www/paymenter. Do you want to reinstall it? (y/N): " && read reinstall
+    if [[ ! "$reinstall" =~ ^[Yy]$ ]]; then
+      echo "Reinstallation of Paymenter canceled."
+      exit 0
+    fi
+  fi
 echo -e "${ask} Are you sure you want to proceed with the installation (y/N): " && read confirm
 
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
