@@ -6,7 +6,7 @@ Paymenter CLI is a script that simplifies the management of Paymenter, an open-s
 
 - Install Paymenter with a single command.
 - Uninstall Paymenter completly.
-- Fix common Paymenter issues. (TODO)
+- Backup database & environment
 - Display information about the current Paymenter installation.
 
 ## Getting Started
