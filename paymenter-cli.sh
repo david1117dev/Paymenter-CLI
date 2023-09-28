@@ -29,7 +29,7 @@ main() {
   echo "  info      - Show info about the current installation"
   echo "  install   - Install Paymenter"
   echo "  uninstall - Completely uninstall Paymenter"
-  #echo "  fix       - Fix common Paymenter issues"
+  echo "  backup    - Backup database & environment"
 }
 
 info() {
@@ -67,13 +67,12 @@ uninstall() {
 
 }
 
-fix() {
-#TODO - FIX COMMON ISSUES
+backup() {
   if [ "$EUID" -ne 0 ]; then
     echo -e "${cross} This command must be run as root."
     exit 1
   fi
-  bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-fix.sh)"
+  bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-backup.sh)"
  
 }
 
@@ -88,8 +87,8 @@ case "$1" in
   "uninstall")
     uninstall
     ;;
-  "fix")
-    fix
+  "backup")
+    backup
     ;;
   *)
     main
