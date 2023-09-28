@@ -72,8 +72,10 @@ backup() {
     echo -e "${cross} This command must be run as root."
     exit 1
   fi
-  curl -s "https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-backup.sh" | bash -s "$2"
- 
+  mkdir -p /etc/paymenter/
+  curl -L -o /etc/paymenter/paymenter-backup.sh "https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-backup.sh" > /dev/null 2>&1
+  chmod +x /etc/paymenter/paymenter-backup.sh
+  bash /etc/paymenter/paymenter-backup.sh $2
 }
 
 # Main script logic
