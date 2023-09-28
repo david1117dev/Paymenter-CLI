@@ -73,6 +73,7 @@ backup() {
     exit 1
   fi
   mkdir -p /etc/paymenter/
+  rm -f /etc/paymenter/paymenter-backup.sh
   curl -L -o /etc/paymenter/paymenter-backup.sh "https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-backup.sh" > /dev/null 2>&1
   chmod +x /etc/paymenter/paymenter-backup.sh
   bash /etc/paymenter/paymenter-backup.sh $2
