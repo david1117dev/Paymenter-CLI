@@ -122,6 +122,6 @@ if [ "$1" == "export" ]; then
 elif [ "$1" == "import" ]; then
     select_backup
 else
-    echo -s "$cross Usage: paymenter backup [export|import]"
+    echo -e "$cross Usage: paymenter backup [export|import]"
     exit 1
 fi
