@@ -72,7 +72,7 @@ backup() {
     echo -e "${cross} This command must be run as root."
     exit 1
   fi
-  bash -c "$(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-backup.sh) import"
+  curl -s "https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-backup.sh" | bash -s "$2"
  
 }
 
