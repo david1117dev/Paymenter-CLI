@@ -20,7 +20,6 @@ curl -L -o /usr/local/bin/paymenter "https://raw.githubusercontent.com/david1117
 
 Now, the paymenter command should be installed
 
-<<<<<<< HEAD
 ### To directly install Paymenter
 
 To use the installation script, simply run this command as root.
@@ -30,8 +29,3 @@ bash <(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main
 ```
 
 _Note: On some systems, it's required to be already logged in as root before executing the one-line command (where `sudo` is in front of the command does not work)._
-
-
-
-=======
->>>>>>> fce2857b8558efe1427660a2af2c48df65e9744a
