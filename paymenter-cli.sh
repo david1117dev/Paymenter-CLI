@@ -30,6 +30,7 @@ main() {
   echo "  install   - Install Paymenter"
   echo "  uninstall - Completely uninstall Paymenter"
   echo "  backup    - Backup database & environment"
+  echo "  artisan   - Run an artisan command directly"
 }
 
 info() {
@@ -78,6 +79,16 @@ backup() {
   chmod +x /etc/paymenter/paymenter-backup.sh
   bash /etc/paymenter/paymenter-backup.sh $2
 }
+artisan(){
+  if [ "$EUID" -ne 0 ]; then
+    echo -e "${cross} This command must be run as root."
+    exit 1
+  fi
+  cd /var/www/paymenter/
+  php artisan "$2"
+
+}
+
 
 # Main script logic
 case "$1" in
@@ -93,6 +104,9 @@ case "$1" in
   "backup")
     backup "$@"
     ;;
+  "artisan")
+    artisan "$@"
+    ;;  
   *)
     main
     ;;
