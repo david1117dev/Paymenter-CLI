@@ -16,6 +16,3 @@ Paste this in your terminal.
 
 Now, the paymenter command should be installed
 
-```bash
-bash <(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)
-```
