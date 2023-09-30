@@ -15,3 +15,7 @@ Paste this in your terminal.
 ```curl -L -o /usr/local/bin/paymenter "https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-cli.sh" && chmod +x /usr/local/bin/paymenter```
 
 Now, the paymenter command should be installed
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/david1117dev/Paymenter-CLI/main/paymenter-install.sh)
+```
